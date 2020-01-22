@@ -1,0 +1,29 @@
+{
+  "name": "eat-your-veggies",
+  "version": "1.0.0",
+  "description": "\"Use this to track the veggies you are eating throughout the day.",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm run test --coverage",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kshep425/Eat-Your-Veggies.git"
+  },
+  "keywords": [
+    "javascript",
+    "node",
+    "handlebars",
+    "mysql"
+  ],
+  "author": "Keisha Shepherd",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kshep425/Eat-Your-Veggies/issues"
+  },
+  "homepage": "https://github.com/kshep425/Eat-Your-Veggies#readme",
+  "dependencies": {
+    "mysql": "^2.18.0"
+  }
+}

@@ -58,7 +58,7 @@ class Veggie {
                 callback(result);
             })
         } catch (err) {
-            throw ("Error - Failed to add to db: ", err);
+            throw (err);
         }
     }
 

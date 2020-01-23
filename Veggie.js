@@ -1,11 +1,8 @@
 const orm = require("./config/orm");
 const util = require("util")
 
-const orm_add_veggie = util.promisify(orm.add_veggie)
-const orm_devour_veggie = util.promisify(orm.devour_veggie)
-
-class Veggie{
-    constructor(){
+class Veggie {
+    constructor() {
         // name of vegetable;
         this.veg_id;
         this.veg_name;
@@ -14,47 +11,31 @@ class Veggie{
         this.veg_state = false;
     }
 
-    add(veg_name ='', callback){
+    add(veg_name = '', callback) {
 
         if (veg_name === '') {
-            throw new Error ("Error: Please include name of vegetable");
+            throw new Error("Error: Please include name of vegetable");
         }
         this.veg_name = veg_name;
-        orm_add_veggie(veg_name)
-            .then((result)=>{
-                veg_id = result.insertId;
-                callback(result);
-
-            })
-            .catch((err)=>{
-                console.log("Caught an error: ", err)
-                throw err
-            });
-
-    }
-
-    devour(callback){
-        this.veg_state = true;
-        orm_devour_veggie(this.veg_name)
-        .then((result)=>{
-            callback(result);
+        this.add_to_db(function(result){
+            callback(result)
         })
-        .catch((err)=>{
-
-            console.log("Caught an error: ", err)
-            throw err;
-        });
     }
 
-    get_veg_name(){
+    devour(callback) {
+        this.veg_state = true;
+        callback()
+    }
+
+    get_veg_name() {
         return this.veg_name;
     }
 
-    get_veg_state(){
+    get_veg_state() {
         return this.veg_state;
     }
 
-    get_veg(){
+    get_veg() {
         const veg = {
             veg_id: this.veg_id,
             veg_name: this.veg_name,
@@ -63,6 +44,34 @@ class Veggie{
 
         return veg;
     }
+
+    set_veg_id(veg_id){
+        this.veg_id = veg_id;
+    }
+
+    add_to_db(callback) {
+        const veg = this
+        try {
+            orm.add_veggie(this.veg_name, this.veg_state, function (result) {
+                //console.log(result)
+                veg.set_veg_id(result.insertId)
+                callback(result);
+            })
+        } catch (err) {
+            throw ("Error - Failed to add to db: ", err);
+        }
+    }
+
+    // update_db_to_devoured_state (callback){
+    //     orm_devour_veggie(this.veg_name)
+    //     .then((result)=>{
+    //         callback(result);
+    //     })
+    //     .catch((err)=>{
+    //         console.log("Error - Failed to remove from db: ", err)
+    //         throw err;
+    //     });
+    // }
 
 }
 

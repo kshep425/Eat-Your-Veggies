@@ -13,9 +13,9 @@ describe("Veggie Class Tests", () => {
 
     afterAll(() => {
         //orm.remove_test_veggies(function(){
-            connection.end();
+        connection.end();
         //})
-     });
+    });
 
     it("Can Instantiate a Veggie", () => {
         const veg = new Veggie();
@@ -25,7 +25,7 @@ describe("Veggie Class Tests", () => {
     it("Can add Veggie", () => {
         const veg = new Veggie();
         const veg_name = "Test_Spinach"
-        veg.add(veg_name, function(){
+        veg.add(veg_name, function () {
             expect(veg.get_veg_name()).toEqual(veg_name)
             expect(veg.get_veg_state()).toBe(false);
         });
@@ -34,8 +34,8 @@ describe("Veggie Class Tests", () => {
     it("Can devour a Veggie", () => {
         const veg = new Veggie();
         const veg_name = "Test_Radish"
-        veg.add(veg_name, function(){
-            veg.devour(function(){
+        veg.add(veg_name, function () {
+            veg.devour(function () {
                 expect(veg.get_veg_name()).toEqual(veg_name)
                 expect(veg.get_veg_state()).toBe(true);
             })
@@ -57,52 +57,67 @@ describe("Veggie Class Tests", () => {
         }).toThrow("Error: Please include name of vegetable");
     })
 
-    it ("Can add veggie to db", () => {
+    it("Can add veggie to db", (done) => {
+
         const veg = new Veggie();
         const veg_name = "Test_Radish"
         veg.add(veg_name, function (db_result) {
+
+            expect.hasAssertions();
+            const expected = {
+                veg_id: db_result.insertId,
+                veg_name: veg_name,
+                veg_state: false
+            }
+            expect(veg.get_veg()).toEqual(expected)
+            done();
+        })
+    })
+
+    it("Can add a devoured veggie to db", (done) => {
+        const veg = new Veggie();
+        const veg_name = "Test_Radish"
+        veg.add(veg_name, function (db_result) {
+            expect.hasAssertions();
+
+            veg.devour(function () {
+                expect.hasAssertions();
 
                 const expected = {
                     veg_id: db_result.insertId,
                     veg_name: veg_name,
-                    veg_state: false
-                }
-                expect(veg.get_veg()).toEqual(expected)
-
-        })
-    })
-
-    it ("Can add a devoured veggie to db", () => {
-        const veg = new Veggie();
-        const veg_name = "Test_Radish"
-        veg.add(veg_name, function (db_result) {
-            veg.devour(function(){
-                    const expected = {
-                        veg_id: db_result.insertId,
-                        veg_name: veg_name,
-                        veg_state: true
-                    }
-                    expect(veg.get_veg()).toEqual(expected)
-
+                    veg_state: true
+                };
+                expect(veg.get_veg()).toEqual(expected);
+                done();
             })
         })
     })
 
-    it ("Can get devoured veg information", () => {
+    it("Can get devoured veg information", (done) => {
         const veg = new Veggie();
         const veg_name = "Test_Cabbage"
-        veg.add(veg_name, function(add_result){
-                veg.devour(function(){
+        veg.add(veg_name, function (add_result) {
+            expect.hasAssertions();
 
-                    const expected = {
-                        veg_id: add_result.insertId,
-                        veg_name: veg_name,
-                        veg_state: true
-                    }
-                    expect(veg.get_veg()).toEqual(expected)
+            veg.devour(function () {
+                expect.hasAssertions();
 
+                const expected = {
+                    veg_id: add_result.insertId,
+                    veg_name: veg_name,
+                    veg_state: true
+                }
+                expect(veg.get_veg()).toEqual(expected)
+                done();
             })
 
         });
     })
+
+    it ("Add Veg can throw an error", function(){
+        const veg = new Veggie();
+        expect(() => veg.add_to_db(()=>{})).toThrow("Please include name of vegetable");
+    })
+
 })

@@ -115,7 +115,7 @@ describe("Veggie Class Tests", () => {
         });
     })
 
-    it ("Add Veg can throw an error", function(){
+    it ("Add Veg to db throws error if veg_name is undefined", function(){
         const veg = new Veggie();
         expect(() => veg.add_to_db(()=>{})).toThrow("Please include name of vegetable");
     })

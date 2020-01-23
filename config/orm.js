@@ -3,6 +3,9 @@ require("console.table")
 
 const orm = {
     add_veggie: function (veg_name, veg_state, callback) {
+        if(veg_name === undefined){
+            throw ("Please include name of vegetable")
+        }
         const query_string =
             `
                 INSERT INTO veggies(veg_name, veg_state)

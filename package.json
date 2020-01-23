@@ -4,7 +4,7 @@
   "description": "\"Use this to track the veggies you are eating throughout the day.",
   "main": "server.js",
   "scripts": {
-    "test": "npm run test --coverage",
+    "test": "\"jest --verbose --coverage --detectOpenHandles test/*\"",
     "start": "node server.js"
   },
   "repository": {
@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/kshep425/Eat-Your-Veggies#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
+    "jest": "^25.1.0",
     "mysql": "^2.18.0"
   }
 }

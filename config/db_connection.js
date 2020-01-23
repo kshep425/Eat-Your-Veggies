@@ -13,7 +13,11 @@ connection.connect(function (err){
         throw err
     }
 
-    console.log("Connected as id: " + connection.threadId)
+    // console.log("Connected as id: " + connection.threadId)
 })
+
+function end_connection(){
+    connection.end();
+}
 
 module.exports = connection

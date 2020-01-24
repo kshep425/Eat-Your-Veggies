@@ -1,23 +1,17 @@
-var mysql = require("mysql");
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "yourRootPassword",
-    database: "veggies_db"
-})
 
-connection.connect(function (err){
-    if (err){
-        console.error("An error occured.")
-        throw err
-    }
+function initialize_connection(obj){
+    var mysql = require("mysql");
+    var connection = mysql.createConnection(obj)
 
-    // console.log("Connected as id: " + connection.threadId)
-})
+    connection.connect(function (err){
+        if (err){
+            console.error("An error occured.")
+            throw err
+        }
+        // console.log("Connected as id: " + connection.threadId)
+    })
 
-function end_connection(){
-    connection.end();
+    return connection
 }
 
-module.exports = connection
+module.exports = initialize_connection;

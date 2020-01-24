@@ -1,8 +1,4 @@
-const Veggie = require("../Veggie.js");
-const connection = require("../config/db_connection")
-const orm = require("../config/orm")
-const util = require("util")
-// const orm_remove_test_veggies = util.promisify(orm.remove_test_veggies)
+const Veggie = require("../models/Veggie");
 
 describe("Veggie Class Tests", () => {
     beforeAll(() => {
@@ -11,11 +7,11 @@ describe("Veggie Class Tests", () => {
         // })
     });
 
-    afterAll(() => {
-        //orm.remove_test_veggies(function(){
-        connection.end();
-        //})
-    });
+    // afterAll(() => {
+    //     //orm.remove_test_veggies(function(){
+    //     connection.end();
+    //     //})
+    // });
 
     it("Can Instantiate a Veggie", () => {
         const veg = new Veggie();
@@ -61,11 +57,11 @@ describe("Veggie Class Tests", () => {
 
         const veg = new Veggie();
         const veg_name = "Test_Radish"
-        veg.add(veg_name, function (db_result) {
+        veg.add(veg_name, function (add_result) {
 
             expect.hasAssertions();
             const expected = {
-                veg_id: db_result.insertId,
+                veg_id: add_result.insertId,
                 veg_name: veg_name,
                 veg_state: false
             }
@@ -77,14 +73,14 @@ describe("Veggie Class Tests", () => {
     it("Can add a devoured veggie to db", (done) => {
         const veg = new Veggie();
         const veg_name = "Test_Radish"
-        veg.add(veg_name, function (db_result) {
+        veg.add(veg_name, function (add_result) {
             expect.hasAssertions();
 
-            veg.devour(function () {
+            veg.devour(function (devour_result) {
                 expect.hasAssertions();
 
                 const expected = {
-                    veg_id: db_result.insertId,
+                    veg_id: add_result.insertId,
                     veg_name: veg_name,
                     veg_state: true
                 };
@@ -118,6 +114,11 @@ describe("Veggie Class Tests", () => {
     it ("Add Veg to db throws error if veg_name is undefined", function(){
         const veg = new Veggie();
         expect(() => veg.add_to_db(()=>{})).toThrow("Please include name of vegetable");
+    })
+
+    it ("Update Veg State in db throws error if veg_id is undefined", function(callback){
+        const veg = new Veggie();
+        callback(expect(() => veg.update_db_veg_state(()=>{})).toThrow("Please include vegetable id"));
     })
 
 })

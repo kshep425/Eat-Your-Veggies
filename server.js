@@ -25,7 +25,21 @@ var connection = require("./config/db_connection")
     // get veggies
     // post veggies
 
-// create get veggie api routes
+// Import routes and give the server access to them.
+    // create get veggie api routes
+const api_routes = require("./routes/api_routes")
+const express = require("express");
+const app = express();
+app.use(api_routes);
+var PORT = process.env.PORT || 3000;
+
+// Start our server so that it can begin listening to client requests.
+app.listen(PORT, function() {
+  // Log (server-side) when our server has started
+  console.log("Server listening on: http://localhost:" + PORT);
+});
+
+
 // create post veggie api routes
 // create home page route
 

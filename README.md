@@ -13,7 +13,11 @@ If starting from scratch:
     source schema.sql
     source seeds.sql
   ```
-  1. npm install mysql
+  1. Install dependencies
+  ```
+    npm install
+  ```
+    Should install mysql, express, console.table, etc.
 
 
 ## Author

@@ -12,10 +12,12 @@ require("console.table")
 const orm = {
     connection: initialize_connection(db_conn_obj),
 
-    add_veggie: function (veg_name, veg_state, callback) {
+    add_veggie: async function (veg_name, veg_state, callback) {
         // https://www.sitepoint.com/javascript-truthy-falsy/
         // runs if veg_name is false, 0, '', NaN, null or undefined
+        console.log("add_veggie: " + veg_name)
         if(!veg_name){
+            console.log("Should throw now!")
             throw ("Please include name of vegetable")
         }
         const query_string =
@@ -24,9 +26,9 @@ const orm = {
                 VALUES (?, ?)
             `
         this.connection.query(query_string, [veg_name, veg_state], function (err, res) {
-            if (err) throw ("Failed to add Veggie");
+            if (err) console.log("Failed to add Veggie");
             // console.log(res)
-            //console.log(res.insertId)
+            // console.log(res.insertId)
             callback(res)
         })
     },
@@ -66,7 +68,7 @@ const orm = {
     select_devoured: function(callback){
         const query_string =
         `
-            SELECT veg_name
+            SELECT *
             FROM veggies
             WHERE veg_state=TRUE
         `;
@@ -81,7 +83,7 @@ const orm = {
     select_not_eaten: function(callback){
         const query_string =
         `
-            SELECT veg_name
+            SELECT *
             FROM veggies
             WHERE veg_state=FALSE
         `;

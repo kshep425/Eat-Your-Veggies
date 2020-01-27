@@ -1,48 +1,16 @@
-var express = require('../../lib/express');
+const express = require("express");
+const app = module.exports = express();
+const Veggie = require("../models/Veggie")
 
-var app = module.exports = express();
+app.get("/", (req, res)=>{
+    //res.send('Welcome to \nEat Your Veggies!')
+    veg = new Veggie();
+    veg.all(function(result){
+        const veg_obj = {
+            veg: result
+        }
+        console.log(veg_obj)
+        res.render("index", veg_obj)
 
-app.map = function(a, route){
-  route = route || '';
-  for (var key in a) {
-    switch (typeof a[key]) {
-      // { '/path': { ... }}
-      case 'object':
-        app.map(a[key], route + key);
-        break;
-      // get: function(){ ... }
-      case 'function':
-        console.log('%s %s', key, route);
-        app[key](route, a[key]);
-        break;
-    }
-  }
-};
-
-var veggies = {
-  uneaten: function(req, res){
-    ;
-  },
-
-  get: function(req, res){
-    res.send('user ' + req.params.uid);
-  },
-
-  delete: function(req, res){
-    res.send('delete users');
-  }
-};
-
-var pets = {
-  list: function(req, res){
-    res.send('user ' + req.params.uid + '\'s pets');
-  },
-
-  delete: function(req, res){
-    res.send('delete ' + req.params.uid + '\'s pet ' + req.params.pid);
-  }
-};
-
-app.map({
-  '/': { get: res.render('index.js')}
+    })
 });

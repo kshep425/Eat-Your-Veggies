@@ -15,6 +15,10 @@ describe("ORM Tests", () => {
             port: 3306
         }
         connection = initialize_connection(db_conn_obj)
+        cb()
+    })
+
+    beforeEach(function(cb){
         orm.remove_test_veggies(() => {
             // console.log("All test veggies removed")
             cb()

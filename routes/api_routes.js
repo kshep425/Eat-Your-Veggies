@@ -24,9 +24,10 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/api/veg/uneaten", function(req, res){
-    orm.select_not_eaten(function(result){
-        // console.table(result)
+app.get("/api/veg", function(req, res){
+    console.log("Get All Veggies")
+    orm.get_veggies(function(result){
+        console.log(result)
         res.json(result)
     })
 })
@@ -37,6 +38,14 @@ app.get("/api/veg/eaten", function(req, res){
         res.json(result)
     })
 })
+
+app.get("/api/veg/uneaten", function(req, res){
+    orm.select_not_eaten(function(result){
+        // console.table(result)
+        res.json(result)
+    })
+})
+
 
 app.put("/api/veg/eat/:id", function(req, res){
     const id = req.params.id

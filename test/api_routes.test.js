@@ -20,7 +20,7 @@ let connection;
 
 describe("Test api Routes", () => {
 
-    beforeAll((cb)=>{
+    beforeEach((cb)=>{
         orm.remove_test_veggies(() => {
             // console.log("All test veggies removed")
             cb()
@@ -87,21 +87,16 @@ describe("Test api Routes", () => {
     })
 
     describe("Devour added veggie", () => {
-        let id;
-        beforeAll((callback) => {
-            // add a Test_Devour_Brocolli
-            orm.add_veggie("Test_Devour_Brocolli", false, (result) => {
-                // console.table(result)
-                id = result.insertId
-                // console.log(id)
-                callback()
-            })
-        })
 
         it("Can devour a vegetable", (done) => {
             // Given Test_Devour_Brocolli has a false veg_state
             // When put api/veg/eat/:id is called
             // Then Test Deveour Brocolli has a true veg_state
+            orm.add_veggie("Test_Devour_Brocolli", false, (result) => {
+                // console.table(result)
+                let id = result.insertId
+                // console.log(id)
+
             request(app)
                 .put("/api/veg/eat/" + id)
                 // .set('Content-Type', 'application/x-www-form-urlencoded')
@@ -113,6 +108,7 @@ describe("Test api Routes", () => {
                         .set("Accept", "application/json")
                         .expect(200, /Test_Devour_Brocolli/, done)
                 })
+            })
         })
 
     })

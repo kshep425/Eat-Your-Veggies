@@ -27,6 +27,13 @@ describe("Test api Routes", () => {
         })
     })
 
+    it("Can get all veggies", (done)=>{
+        request(app)
+            .get("/api/veg")
+            .set("Accept", "application/json")
+            .expect(200, done)
+    })
+
     it("Can get all uneaten vegetables", async (done) => {
 
         const all_veg =[
@@ -78,6 +85,7 @@ describe("Test api Routes", () => {
             .expect(200, /Test_Add_Brocolli/, done)
         })
     })
+
     describe("Devour added veggie", () => {
         let id;
         beforeAll((callback) => {
@@ -91,7 +99,9 @@ describe("Test api Routes", () => {
         })
 
         it("Can devour a vegetable", (done) => {
-
+            // Given Test_Devour_Brocolli has a false veg_state
+            // When put api/veg/eat/:id is called
+            // Then Test Deveour Brocolli has a true veg_state
             request(app)
                 .put("/api/veg/eat/" + id)
                 // .set('Content-Type', 'application/x-www-form-urlencoded')
@@ -106,4 +116,6 @@ describe("Test api Routes", () => {
         })
 
     })
+
+
 })

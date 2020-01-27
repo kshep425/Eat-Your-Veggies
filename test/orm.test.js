@@ -77,6 +77,22 @@ describe("ORM Tests", () => {
         })
     })
 
+
+    it("Can select all veggies", function (cb) {
+        orm.get_veggies(function (result) {
+            const query_string =
+            `
+                SELECT *
+                FROM veggies
+            `
+            //console.table(result)
+            connection.query(query_string, function(err, res){
+                 //console.table(res)
+                 cb(expect(result).toEqual(res))
+             })
+         })
+     })
+
     // describe("Validate thrown errors with incorrect password", function(){
     //     beforeAll(()=>{
     //         const wrong_conn_obj =

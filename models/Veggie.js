@@ -1,5 +1,4 @@
 const orm = require("../config/orm");
-const util = require("util")
 
 class Veggie {
     constructor() {
@@ -75,6 +74,17 @@ class Veggie {
             throw (err);
         }
 
+    }
+
+    all(callback) {
+        try {
+            orm.get_veggies(function (result) {
+                // console.log(result)
+                callback(result);
+            })
+        } catch (err) {
+            throw (err);
+        }
     }
 
 }

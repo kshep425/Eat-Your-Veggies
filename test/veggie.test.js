@@ -121,4 +121,14 @@ describe("Veggie Class Tests", () => {
         callback(expect(() => veg.update_db_veg_state(()=>{})).toThrow("Please include vegetable id"));
     })
 
+    it ("Can return all vegetables", function(callback){
+        const veg = new Veggie();
+        veg.all(function(res){
+            expect(typeof res).toBe("object")
+            console.log(Object.keys(res[0]))
+            expect(Object.keys(res[0])).toEqual(["veg_id", "veg_name", "veg_state"])
+            callback()
+        })
+    })
+
 })

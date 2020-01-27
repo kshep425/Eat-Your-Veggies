@@ -12,7 +12,7 @@ require("console.table")
 const orm = {
     connection: initialize_connection(db_conn_obj),
 
-    add_veggie: async function (veg_name, veg_state, callback) {
+    add_veggie: function (veg_name, veg_state, callback) {
         // https://www.sitepoint.com/javascript-truthy-falsy/
         // runs if veg_name is false, 0, '', NaN, null or undefined
         console.log("add_veggie: " + veg_name)
@@ -93,8 +93,19 @@ const orm = {
             // console.table(res);
             callback(res);
         });
-    }
+    },
 
+    get_veggies: function(callback){
+        const query_string =
+        `
+            SELECT *
+            FROM veggies
+        `
+        this.connection.query(query_string, function(err, res){
+            if (err) throw ("Can't get your veggies today");
+            callback(res)
+        })
+    }
 }
 
 module.exports = orm;

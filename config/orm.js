@@ -1,12 +1,16 @@
 const initialize_connection = require("./db_connection")
-const db_conn_obj =
-{
-    database: "veggies_db",
-    user: "root",
-    password: "yourRootPassword",
-    host: "localhost",
-    port: 3306
-}
+// const db_conn_obj =
+// {
+//     database: "veggies_db",
+//     user: "root",
+//     password: "yourRootPassword",
+//     host: "localhost",
+//     port: 3306
+// }
+config = require("./config.json")
+const db_conn_obj = config["production"]
+console.log(db_conn_obj);
+
 require("console.table")
 
 const orm = {

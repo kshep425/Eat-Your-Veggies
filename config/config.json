@@ -1,0 +1,23 @@
+{
+    "development": {
+        "user": "mk04bapipj9uz7u4",
+        "password": null,
+        "database": "",
+        "host": "",
+        "dialect": ""
+    },
+    "test":         {
+        "database": "veggies_db",
+        "user": "root",
+        "password": "yourRootPassword",
+        "host": "localhost",
+        "port": 3306
+    },
+    "production": {
+        "username": "mk04bapipj9uz7u4",
+        "password": "nccbgs8595vidm4z",
+        "database": "jtkqluph4yr6mso5",
+        "host": "b4e9xxkxnpu2v96i.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+        "dialect": "mysql"
+    }
+}

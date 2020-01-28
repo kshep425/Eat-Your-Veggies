@@ -8,7 +8,10 @@ function initialize_connection(obj){
             console.error("An error occured.")
             throw err
         }
-        // console.log("Connected as id: " + connection.threadId)
+
+        console.log("Connected as id: " + connection.threadId)
+        console.log(obj)
+
     })
 
     return connection

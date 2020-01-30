@@ -1,4 +1,7 @@
 // Psuedocode
+// Add dotenv for development, test, and production environments.
+
+require('dotenv').config()
 
 // db_connection.js in database folder
 var connection = require("./config/db_connection")

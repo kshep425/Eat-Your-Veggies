@@ -10,8 +10,6 @@ function initialize_connection(obj){
         }
 
         console.log("Connected as id: " + connection.threadId)
-        console.log(obj)
-
     })
 
     return connection

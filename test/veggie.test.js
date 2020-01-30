@@ -1,10 +1,17 @@
 const Veggie = require("../models/Veggie");
+const db_conn_obj = require("../config/config");
+const orm = require("../config/orm");
+const initialize_connection = require("../config/db_connection");
+let connection;
 
 describe("Veggie Class Tests", () => {
-    beforeAll(() => {
-        // orm.remove_test_veggies(function(cb){
-        //     cb("Removed Test Veggies");
-        // })
+    beforeAll((cb) => {
+
+        connection = initialize_connection(db_conn_obj);
+
+        orm.remove_test_veggies(function(){
+            cb();
+        })
     });
 
     // afterAll(() => {

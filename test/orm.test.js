@@ -2,18 +2,10 @@ require("console.table")
 const orm = require("../config/orm");
 const initialize_connection = require("../config/db_connection");
 let connection;
+const db_conn_obj = require("../config/config")
 
 describe("ORM Tests", () => {
     beforeAll((cb) => {
-
-        const db_conn_obj =
-        {
-            database: "veggies_db",
-            user: "root",
-            password: "yourRootPassword",
-            host: "localhost",
-            port: 3306
-        }
         connection = initialize_connection(db_conn_obj)
         cb()
     })

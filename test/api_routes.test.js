@@ -17,9 +17,13 @@ const app = require("../routes/api_routes.js")
 const orm = require("../config/orm");
 const initialize_connection = require("../config/db_connection");
 let connection;
+const db_conn_obj = require("../config/config")
 
 describe("Test api Routes", () => {
-
+    beforeAll((cb)=>{
+        connection = initialize_connection(db_conn_obj)
+        cb()
+    })
     beforeEach((cb)=>{
         orm.remove_test_veggies(() => {
             // console.log("All test veggies removed")
